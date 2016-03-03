@@ -1,0 +1,58 @@
+<head>
+	<link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="datepicker/css/datepicker.css">
+</head>
+<form role="form" data-toggle="validator">
+	  <div class="form-group has-feedback">
+    <label for="inputTwitter" class="control-label">Twitter</label>
+    <div class="input-group">
+      <span class="input-group-addon">@</span>
+      <input type="text" class="form-control" id="dpd1" name="dpd1" placeholder="From" readonly required>
+    </div>
+    <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+  </div>
+
+    <div class="form-group has-feedback">
+    <label for="inputTwitter" class="control-label">Twitter</label>
+    <div class="input-group">
+      <span class="input-group-addon">@</span>
+      <input type="text" class="form-control" id="dpd2" name="dpd2" placeholder="To" readonly required data-compare="compare">
+    </div>
+    <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+  </div>
+
+				<div class="form-group has-feedback">
+					<label>Vendor Code</label>
+					<input type="text" id="modal_manufacturer_code" name="modal_input" class="form-control" data-odd="odd">
+					<span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+					<div class="help-block with-errors"></div>
+				</div>
+
+      </form>
+<script src="jquery.min.js"></script>
+<script src="bootstrap/js/bootstrap.min.js"></script>
+<script src="datepicker/js/bootstrap-datepicker.js"></script>
+<script src="dist/validator.min.js"></script>
+<script type="text/javascript">
+ $('#myForm').validator();
+
+
+var checkin = $('#dpd1').datepicker().on('changeDate', function(ev) {
+  if (ev.date.valueOf() > checkout.date.valueOf()) {
+    var newDate = new Date(ev.date)
+    newDate.setDate(newDate.getDate() + 1);
+    checkout.setValue(newDate);
+  }
+  checkin.hide();
+   $('#dpd1').change();
+  $('#dpd2')[0].focus();
+}).data('datepicker');
+var checkout = $('#dpd2').datepicker({
+  onRender: function(date) {
+    return date.valueOf() <= checkin.date.valueOf() ? 'disabled' : '';
+  }
+}).on('changeDate', function(ev) {
+  checkout.hide();
+   $('#dpd2').change();
+}).data('datepicker');
+</script>
